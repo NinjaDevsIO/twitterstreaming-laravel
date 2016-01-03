@@ -1,0 +1,24 @@
+{
+  "name": "rbadillap/twitterstreaming-laravel",
+  "description": "TwitterStreaming Service Provider for Laravel",
+  "keywords": [
+    "twitter",
+    "api",
+    "realtime",
+    "streaming",
+    "laravel",
+    "service provider"
+  ],
+  "require": {
+    "illuminate/support": "5.*",
+    "rbadillap/twitterstreaming": "*"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ronny Badilla",
+      "email": "info@ronnybadilla.com"
+    }
+  ],
+  "minimum-stability": "stable"
+}

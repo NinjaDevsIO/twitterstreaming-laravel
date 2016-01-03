@@ -1,0 +1,8 @@
+# Vendors folder
+/vendor
+
+# Composer file generated
+/composer.lock
+
+# IDE files
+/.idea
