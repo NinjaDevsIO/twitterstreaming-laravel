@@ -7,7 +7,7 @@
  *
  * @license MIT
  */
-namespace TwitterStreaming;
+namespace TwitterStreaming\Laravel;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -23,8 +23,6 @@ class TwitterStreamingServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../../config/config.php' => config_path('twitterstreaming.php')
         ]);
-
-        $this->commands(Commands\TwitterStreamingPublic::class);
     }
 
     /**
@@ -34,13 +32,15 @@ class TwitterStreamingServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton('twitterstreaming', function ($app) {
+            return new TwitterStreaming($app['config']->get('twitterstreaming'));
+        });
     }
 
     public function provides()
     {
         return [
-            Commands\TwitterStreamingPublic::class,
+            'twitterstreaming'
         ];
     }
 }

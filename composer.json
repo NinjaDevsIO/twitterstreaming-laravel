@@ -11,7 +11,7 @@
   ],
   "require": {
     "illuminate/support": "5.*",
-    "rbadillap/twitterstreaming": "*"
+    "rbadillap/twitterstreaming": "0.1.*"
   },
   "license": "MIT",
   "authors": [
@@ -23,7 +23,7 @@
   "minimum-stability": "stable",
   "autoload": {
     "psr-4": {
-      "TwitterStreaming\\": "src/TwitterStreaming"
+      "TwitterStreaming\\Laravel\\": "src/TwitterStreaming"
     }
   }
 }
