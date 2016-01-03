@@ -20,6 +20,7 @@ class TwitterStreamingServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Publishes the config file twitterstreaming.php
         $this->publishes([
             __DIR__ . '/../../config/config.php' => config_path('twitterstreaming.php')
         ]);
@@ -33,14 +34,13 @@ class TwitterStreamingServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('twitterstreaming', function ($app) {
-            return new TwitterStreaming($app['config']->get('twitterstreaming'));
+            return new TwitterStreamingFactory($app['config']->get('twitterstreaming'));
         });
     }
 
     public function provides()
     {
-        return [
-            'twitterstreaming'
-        ];
+        // TwitterStreaming
+        return ['twitterstreaming'];
     }
 }
