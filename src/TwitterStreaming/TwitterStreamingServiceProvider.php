@@ -23,6 +23,8 @@ class TwitterStreamingServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../../config/config.php' => config_path('twitterstreaming.php')
         ]);
+
+        $this->commands(TwitterStreaming\Commands\TwitterStreamingPublic::class);
     }
 
     /**
