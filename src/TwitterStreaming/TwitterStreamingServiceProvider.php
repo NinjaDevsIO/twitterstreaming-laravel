@@ -36,4 +36,11 @@ class TwitterStreamingServiceProvider extends ServiceProvider
     {
         //
     }
+
+    public function provides()
+    {
+        return [
+            Commands\TwitterStreamingPublic::class,
+        ];
+    }
 }
