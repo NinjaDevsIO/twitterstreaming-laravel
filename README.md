@@ -102,7 +102,7 @@ And use it without the need to register the new extension.
 ## How can I use it in Laravel
 There is some ways, but if you wanna combine Laravel and TwitterStreamingPHP you can create your own command
 
-`php artisan make:console TwitterTrack`
+    php artisan make:console TwitterTrack
 
 And put your logic to track tweets.
 
