@@ -25,6 +25,12 @@ Also, add the `TwitterStreaming` facade in the `aliasses` array (located in the 
 'TwitterStreaming' => TwitterStreaming\Laravel\Facades\TwitterStreaming::class
 ```
 
+Also you may want to create a `twitterstreaming.php` configuration file, to do that and put on it the credentials of your Twitter App you should run the following command:
+
+    php artisan vendor:publish
+
+Now, you can see a new file created in the `app` folder where you can add your credentials.
+
 And ready to use!
 
 ## Usage
