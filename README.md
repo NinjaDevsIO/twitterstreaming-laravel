@@ -1,6 +1,6 @@
 # TwitterStreaming Laravel 5 Service Provider
 
-We have now support to use **TwitterStreamingPHP** with Laravel 5 through a [”Service Provider](https://laravel.com/docs/master/providers) :)
+We are now supporting **TwitterStreamingPHP** with Laravel 5 through a [Service Provider](https://laravel.com/docs/master/providers) :)
 
 ## Installation
 
@@ -10,7 +10,7 @@ This **TwitterStreamingPHP** Service Provider can be installed via [Composer](ht
 	
 Now you should register the provider in the Laravel application in your `config/app.php` configuration file:
 
-```
+```php
 'providers' => [
 	// other service providers..
 		
@@ -21,9 +21,8 @@ Now you should register the provider in the Laravel application in your `config/
 
 Also, add the `TwitterStreaming` facade in the `aliasses` array (located in the same file).
 
-```
+```php
 'TwitterStreaming' => TwitterStreaming\Laravel\Facades\TwitterStreaming::class
-
 ```
 
 And ready to use!
@@ -40,12 +39,12 @@ Within this Service Package you will find some extra methods to simplify the way
 
 Instead of define the endpoints using the `endpoint` method in **TwitterStreamingPHP** you can call some methods which injects the endpoint (and its types) directly. For example:
 
-```
+```php
 // Instead of
 (new Tracker)
     ->endpoint(Endpoints\PublicEndpoint::class, 'sample')
 
-// You can call
+// You can call in Laravel
 TwitterStreaming::publicSample()
 
 // and continue with the rest of the code
@@ -54,18 +53,18 @@ TwitterStreaming::publicSample()
 
 All the methods to simplify the endpoints definitions listed here:
 
-```
+```php
 publicFilter()
 // alias of endpoint(Endpoints\PublicEndpoint::class, 'filter')
 ```
 
-```
-publicFilter()
+```php
+publicSample()
 // alias of endpoint(Endpoints\PublicEndpoint::class, 'sample')
 ```
 
-```
-publicFilter()
+```php
+user()
 // alias of endpoint(Endpoints\UserEndpoint::class)
 ```
 
@@ -73,9 +72,9 @@ publicFilter()
 
 Are you using [Filters module?](https://github.com/TwitterStreamingPHP/twitterstreaming-filters)
 
-No, well, you should :)
+If no, well, you should :)
 
-Yes, we have been integrated into the Laravel Service Provider.
+If yes, we have been integrated into the Laravel Service Provider.
 
 The only thing that you need to use is require the package using composer:
 
@@ -83,13 +82,14 @@ The only thing that you need to use is require the package using composer:
 
 And use it without the need to register the new extension.
 
-```
-// is not necessary
+```php
+// this is not necessary
 ->addExtension(Extensions\Filters::class)
 
-// TwitterStreamingPHP detects automatically if the module are included with composer and you can use filters method automatically
+// TwitterStreamingPHP detects automatically if the module are included with composer 
+// and you can use filters method automatically
 
-    ->filters(function (Extensions\FiltersFactory $filters) {
+    ->filters(function ($filters) {
         return $filters
             // Use methods to filter tweets
             ->withoutRTs()
@@ -97,6 +97,48 @@ And use it without the need to register the new extension.
             ->onlyFromAndroid();
     })
 
+```
+
+## How can I use it in Laravel
+There is some ways, but if you wanna combine Laravel and TwitterStreamingPHP you can create your own command
+
+`php artisan make:console TwitterTrack`
+
+And put your logic to track tweets.
+
+```php
+        TwitterStreaming::publicFilter()
+            ->parameters([
+                'track' => '#realmadrid'
+            ])
+            ->filters(function ($filters) {
+                return $filters
+                    ->withoutRTs()
+                    ->withoutReplies()
+                    ->onlyFromAndroid();
+            })
+            ->track(function ($tweet) {
+                print $tweet->text . ' (' . $tweet->source . ')' . PHP_EOL . PHP_EOL;
+            });
+```
+
+Even better, you could dispatch a queue listener to store in database.
+
+```php
+        TwitterStreaming::publicFilter()
+            ->parameters([
+                'track' => '#realmadrid'
+            ])
+            ->filters(function ($filters) {
+                return $filters
+                    ->withoutRTs()
+                    ->withoutReplies()
+                    ->onlyFromAndroid();
+            })
+            ->track(function ($tweet) {
+                // php artisan make:job YourLaravelJob
+                $this->dispatch(new YourLaravelJob($tweet));
+            });
 ```
 
 ## Contributing
